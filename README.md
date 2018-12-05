@@ -45,7 +45,7 @@ In the loading callback function you will obtain a data object D on which you ca
 <script type="text/javascript" src="data_util.js"></script>
 <script type="text/javascript" src="learningjs.js"></script>
 loadString(content, function(D) {
-  var tree = new learningjs.tree();
+  var tree = new learningjs.Tree();
   tree.train(D, function(model, err){
     if(err) {
       console.log(err);
@@ -62,8 +62,8 @@ loadString(content, function(D) {
 Similarly you need to import the lib and do the same:
 
 ```javascript 
-var learningjs = require('learningjs.js');
-var data_util = require('data_util.js');
+var learningjs = require('./learningjs.js');
+var data_util = require('./data_util.js');
 var tree = new learningjs.tree();
 data_util.loadRealFile(fn_csv, function(D) {
 
@@ -76,7 +76,7 @@ data_util.loadRealFile(fn_csv, function(D) {
   D.l2_weight = 0.0;
   D.iterations = 1000; //increase number of iterations for better performance
 
-  new learningjs.logistic().train(D, function(model, err){
+  new learningjs.Logistic.train(D, function(model, err){
     if(err) {
       console.log(err);
     } else {
