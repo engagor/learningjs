@@ -4,8 +4,8 @@
   "description": "logistic regression/c4.5 decision tree algorithm",
   "main": "learningjs.js",
   "scripts": {
-    "test_tree": "node test_lr.js",
-    "test_logistic": "node test_tree.js"
+    "test_tree": "node test_tree.js",
+    "test_logistic": "node test_lr.js"
   },
   "repository": {
     "type": "git",
