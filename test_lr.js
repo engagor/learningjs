@@ -7,8 +7,8 @@
 //////////////////////////////////////////////////////////////////
 'use strict';
 
-var learningjs = require('learningjs.js');
-var data_util = require("data_util.js");
+var learningjs = require('./learningjs.js');
+var data_util = require("./data_util.js");
 
 if(process.argv.length<4) {
   console.log('usage: %s %s training_file test_file', process.argv[0], process.argv[1]);
@@ -34,7 +34,7 @@ data_util.loadRealFile(fn, function(D) {
   D.iterations = 1000; //increase number of iterations for better performance
 
   var start = process.hrtime();
-  new learningjs.logistic().train(D, function(model, err){
+  new learningjs.Logistic().train(D, function(model, err){
     if(err) {
       console.log(err);
     } else {
