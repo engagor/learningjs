@@ -8,26 +8,24 @@
 //  email: yandongl _at_ cs.cmu.edu
 ////////////////////////////////////////////////////////////////////////////////////////////////
 'use strict';
-if(typeof require === 'function') {
-  var fs = require('fs');
-  var lazy = require("lazy");
-}
+let fs = require('fs');
+let lazy = require("lazy");
 
-var util = {
+let util = {
 
 normalize: function(data, nfeatures) {
-  for(var i=0;i<data.length;i++) {
-    var mean=0.0, stderr = 0.0;
-    for(var j=0;j<nfeatures;j++) {
+  for(let i=0;i<data.length;i++) {
+    let mean=0.0, stderr = 0.0;
+    for(let j=0;j<nfeatures;j++) {
       mean += data[i][j];
     }
     mean/=nfeatures;
-    for(var j=0;j<nfeatures;j++) {
-      var a = data[i][j]-mean;
+    for(let j=0;j<nfeatures;j++) {
+      let a = data[i][j]-mean;
       stderr += a*a;
     }
     stderr = Math.sqrt(stderr/nfeatures);
-    for(var j=0;j<nfeatures;j++) {
+    for(let j=0;j<nfeatures;j++) {
       data[i][j] -= mean;
       data[i][j] /=stderr;
     }
@@ -35,17 +33,17 @@ normalize: function(data, nfeatures) {
 },
 
 loadTextFile: function(fn, cb) {
-  var data=[];
-  var header = true;
-  var targets=[];
-  var label_col = -1;
-  var l_features_id=[];
-  var featuresType={};
-  var l_features_name=[];
-  var feature_name2id=[];
-  var s_targets={};
-  var l_targets=[];
-  var nfeatures = 0; 
+  let data=[];
+  let header = true;
+  let targets=[];
+  let label_col = -1;
+  let l_features_id=[];
+  let featuresType={};
+  let l_features_name=[];
+  let feature_name2id=[];
+  let s_targets={};
+  let l_targets=[];
+  let nfeatures = 0; 
   if (!String.prototype.trim) {
     String.prototype.trim = function () {
       return this.replace(/^\s+|\s+$/g, '');
@@ -54,7 +52,7 @@ loadTextFile: function(fn, cb) {
   new lazy(fs.createReadStream(fn))
   .on('end', function() {
 
-    for(var key in s_targets) {
+    for(let key in s_targets) {
       if (s_targets.hasOwnProperty(key)) {
         l_targets.push(key);
       }
@@ -66,8 +64,8 @@ loadTextFile: function(fn, cb) {
   .forEach(function(line){
     if(header) {
       header=false;
-      var aa = line.toString().split(',');
-      for(var i=0;i<aa.length;i++) {
+      let aa = line.toString().split(',');
+      for(let i=0;i<aa.length;i++) {
         aa[i] = aa[i].trim();
         if (aa[i] === 'label') label_col = i;
         else {
@@ -84,19 +82,19 @@ loadTextFile: function(fn, cb) {
       }
       nfeatures = l_features_id.length;
     } else {
-      var aa = line.toString().split(',');
+      let aa = line.toString().split(',');
       if (aa.length == (nfeatures+1)) {
-        for(var i=0;i<aa.length;i++) {
+        for(let i=0;i<aa.length;i++) {
           aa[i] = aa[i].trim();
         }
         if(aa[label_col] === 'feature_type') {
-          for(var i=0;i<nfeatures;i++) {
+          for(let i=0;i<nfeatures;i++) {
             featuresType[l_features_name[i]]=aa[l_features_id[i]];//id points to index in input file
           }
         } else {
-          var dd=[];
-          for(var i=0;i<nfeatures;i++) {
-            var a = aa[l_features_id[i]];
+          let dd=[];
+          for(let i=0;i<nfeatures;i++) {
+            let a = aa[l_features_id[i]];
             dd.push(a);
           }
           s_targets[aa[label_col]]=1;
@@ -111,15 +109,15 @@ loadTextFile: function(fn, cb) {
 },
 
 loadRealFile: function(fn, cb) {
-  var data=[];
-  var header = true;
-  var targets=[];
-  var label_col = -1;
-  var l_features=[];
-  var l_features_name=[];
-  var s_targets={};
-  var l_targets=[];
-  var nfeatures = 0; 
+  let data=[];
+  let header = true;
+  let targets=[];
+  let label_col = -1;
+  let l_features=[];
+  let l_features_name=[];
+  let s_targets={};
+  let l_targets=[];
+  let nfeatures = 0; 
   if (!String.prototype.trim) {
     String.prototype.trim = function () {
       return this.replace(/^\s+|\s+$/g, '');
@@ -128,21 +126,21 @@ loadRealFile: function(fn, cb) {
   new lazy(fs.createReadStream(fn))
   .on('end', function() {
 
-    for(var key in s_targets) {
+    for(let key in s_targets) {
       if (s_targets.hasOwnProperty(key)) {
         l_targets.push(key);
       }
     } 
 
-    var ntargets = l_targets.length;
+    let ntargets = l_targets.length;
     cb({data:data, l_featuresIndex:l_features, nfeatures:nfeatures, targets:targets, l_targets:l_targets, ntargets:ntargets, featureNames:l_features_name});
   })
   .lines
   .forEach(function(line){
     if(header) {
       header=false;
-      var aa = line.toString().split(',');
-      for(var i=0;i<aa.length;i++) {
+      let aa = line.toString().split(',');
+      for(let i=0;i<aa.length;i++) {
         aa[i] = aa[i].trim();
         if (aa[i] === 'label') label_col = i;
         else {
@@ -156,14 +154,14 @@ loadRealFile: function(fn, cb) {
       }
       nfeatures = l_features.length;
     } else {
-      var aa = line.toString().split(',');
-      var dd=[];
-      for(var i=0;i<aa.length;i++) {
+      let aa = line.toString().split(',');
+      let dd=[];
+      for(let i=0;i<aa.length;i++) {
         aa[i] = aa[i].trim();
       }
       if(aa[label_col]==='feature_type') return true;
-      for(var i=0;i<nfeatures;i++) {
-        var a = parseFloat(aa[l_features[i]]);
+      for(let i=0;i<nfeatures;i++) {
+        let a = parseFloat(aa[l_features[i]]);
         dd.push(a||0);
       }
       s_targets[aa[label_col]]=1;
@@ -176,18 +174,18 @@ loadRealFile: function(fn, cb) {
 }
 
 function loadString (content, cb) {
-  var data=[];
-  var header = true;
-  var targets=[];
-  var label_col = -1;
-  var l_features_id=[];
-  var l_features_name=[];
-  var feature_name2id=[];
-  var s_targets={};
-  var l_targets=[];
-  var nfeatures = 0; 
-  var featuresType={};
-  var data_start_line=1;
+  let data=[];
+  let header = true;
+  let targets=[];
+  let label_col = -1;
+  let l_features_id=[];
+  let l_features_name=[];
+  let feature_name2id=[];
+  let s_targets={};
+  let l_targets=[];
+  let nfeatures = 0; 
+  let featuresType={};
+  let data_start_line=1;
 
   if (!String.prototype.trim) {
     String.prototype.trim = function () {
@@ -195,10 +193,10 @@ function loadString (content, cb) {
     };
   }
 
-  var lines = content.split('\n');
+  let lines = content.split('\n');
   //header
-  var aa = lines[0].toString().split(',');
-  for(var i=0;i<aa.length;i++) {
+  let aa = lines[0].toString().split(',');
+  for(let i=0;i<aa.length;i++) {
     aa[i] = aa[i].trim();
     if (aa[i] === 'label') label_col = i;
     else {
@@ -217,8 +215,8 @@ function loadString (content, cb) {
   aa = lines[1].toString().split(',');
   if(aa[label_col].trim() === 'feature_type') {
     data_start_line++;
-    var cnt = 0;
-    for(var i=0;i<aa.length;i++) {
+    let cnt = 0;
+    for(let i=0;i<aa.length;i++) {
       aa[i] = aa[i].trim();
       if(i!==label_col) {
         featuresType[l_features_name[cnt]]=aa[i];
@@ -227,16 +225,16 @@ function loadString (content, cb) {
     }
   }
 
-  for(var j=data_start_line;j<lines.length;j++) {
-    var line = lines[j].toString();
+  for(let j=data_start_line;j<lines.length;j++) {
+    let line = lines[j].toString();
     aa = line.split(',');
     if (aa.length == (nfeatures+1)) {
-      for(var i=0;i<aa.length;i++) {
+      for(let i=0;i<aa.length;i++) {
         aa[i] = aa[i].trim();
       }
-      var dd=[];
-      for(var i=0;i<nfeatures;i++) {
-        var a = aa[l_features_id[i]];
+      let dd=[];
+      for(let i=0;i<nfeatures;i++) {
+        let a = aa[l_features_id[i]];
         dd.push(a);
       }
       s_targets[aa[label_col]]=1;
@@ -247,13 +245,13 @@ function loadString (content, cb) {
     }
   }
 
-  for(var key in s_targets) {
+  for(let key in s_targets) {
     if (s_targets.hasOwnProperty(key)) {
       l_targets.push(key);
     }
   }
 
-  var ntargets = l_targets.length;
+  let ntargets = l_targets.length;
 
   cb({data:data, l_featuresIndex:l_features_id, nfeatures:nfeatures, targets:targets, l_targets:l_targets, ntargets:ntargets, featureNames:l_features_name, feature_name2id:feature_name2id, featuresType:featuresType});
 
