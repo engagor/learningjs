@@ -1,15 +1,12 @@
 const LogisticModel = require('./logisticModel.js');
 
 class Logistic {
-    train(D, cb) {
-        cb(
-            new LogisticModel(
-                this.optimize(D),
-                D.ntargets,
-                D.l_targets,
-                D.nfeatures
-            ),
-            undefined
+    train(D) {
+        return new LogisticModel(
+            this.optimize(D),
+            D.ntargets,
+            D.l_targets,
+            D.nfeatures
         );
     }
 
