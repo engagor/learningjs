@@ -7,15 +7,15 @@
 //////////////////////////////////////////////////////////////////
 'use strict';
 
-var learningjs = require('./learningjs.js');
-var DataUtil = require("./dataUtil.js");
+let learningjs = require('./learningjs.js');
+let DataUtil = require("./dataUtil.js");
 
 if(process.argv.length<4) {
   console.log('usage: %s %s training_file test_file', process.argv[0], process.argv[1]);
   process.exit(0);
 }
-var fn = process.argv[2];
-var fn_test = process.argv[3];
+let fn = process.argv[2];
+let fn_test = process.argv[3];
 
 console.log('=== TRAIN:%s ===', fn);
 console.log('=== TEST:%s ===', fn_test);
@@ -33,12 +33,12 @@ DataUtil.loadRealFile(fn, function(D) {
   D.l2_weight = 0.0;
   D.iterations = 1000; //increase number of iterations for better performance
 
-  var start = process.hrtime();
+  let start = process.hrtime();
   new learningjs.Logistic().train(D, function(model, err){
     if(err) {
       console.log(err);
     } else {
-      var elapsed = process.hrtime(start)[1] / 1000000;
+      let elapsed = process.hrtime(start)[1] / 1000000;
       console.log('training took ' + process.hrtime(start)[0] + " s, " + elapsed.toFixed(2) + " ms.");
       model.calcAccuracy(D.data, D.targets, function(acc, correct, total){
         console.log('training: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
