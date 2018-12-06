@@ -33,11 +33,11 @@ data_util.loadTextFile(fn, function(D) {
       //console.log('model:',model);
       var elapsed = process.hrtime(start)[1] / 1000000;
       console.log('training took ' + process.hrtime(start)[0] + " s, " + elapsed.toFixed(2) + " ms.");
-      model.calcAccuracy(D.data, D.targets, function(acc, correct, total){
+      model.calcAccuracy(D.data, D.nTargets, function(acc, correct, total){
         console.log('training: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
       });
       data_util.loadTextFile(fn_test, function(T) {
-        model.calcAccuracy(T.data, T.targets, function(acc, correct, total){
+        model.calcAccuracy(T.data, T.nTargets, function(acc, correct, total){
           console.log('    test: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
         });
       });

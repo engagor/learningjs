@@ -25,11 +25,11 @@ function processTestFile(f) {
           var elapsed = 0.00;
           var diff = (new Date).getTime() - start;
           console.log('Testing took ' + diff.toFixed(0) + " ms.");
-          trained_model.calcAccuracy(D.data, D.targets, function(acc, correct, total){
+          trained_model.calcAccuracy(D.data, D.nTargets, function(acc, correct, total){
             console.log( 'Testing: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
             $("#status").append( 'Testing: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%<br/>');
           });
-          renderTest(trained_model, D.data,D.featureNames, D.targets, $("#samples"));
+          renderTest(trained_model, D.data,D.featureNames, D.nTargets, $("#samples"));
         }
       });
     };
@@ -60,7 +60,7 @@ function processTrainFile(f) {
             var elapsed = 0.00;
             var diff = (new Date).getTime() - start;
             console.log('training took ' + diff.toFixed(0) + " ms.");
-            model.calcAccuracy(D.data, D.targets, function(acc, correct, total){
+            model.calcAccuracy(D.data, D.nTargets, function(acc, correct, total){
               console.log( 'training: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
             });
             $("#status").append('Model training has finished. Now drop your test file.</br>');
