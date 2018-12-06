@@ -8,7 +8,7 @@
 'use strict';
 
 var learningjs = require('./learningjs.js');
-var data_util = require("./data_util.js");
+var DataUtil = require("./dataUtil.js");
 
 if(process.argv.length<4) {
   console.log('usage: %s %s training_file test_file', process.argv[0], process.argv[1]);
@@ -21,10 +21,10 @@ console.log('=== TRAIN:%s ===', fn);
 console.log('=== TEST:%s ===', fn_test);
 
 
-data_util.loadRealFile(fn, function(D) {
+DataUtil.loadRealFile(fn, function(D) {
 
   //normalize data
-  data_util.normalize(D.data, D.nfeatures); 
+  DataUtil.normalize(D.data, D.nfeatures);
 
 
   //logistic regression. following params are optional
@@ -43,7 +43,7 @@ data_util.loadRealFile(fn, function(D) {
       model.calcAccuracy(D.data, D.targets, function(acc, correct, total){
         console.log('training: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
       });
-      data_util.loadRealFile(fn_test, function(T) {
+      DataUtil.loadRealFile(fn_test, function(T) {
         model.calcAccuracy(T.data, T.targets, function(acc, correct, total){
           console.log('    test: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
         });

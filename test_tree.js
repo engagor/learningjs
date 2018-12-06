@@ -8,7 +8,7 @@
 'use strict';
 
 var learningjs = require('./learningjs.js');
-var data_util = require("./data_util.js");
+var DataUtil = require("./dataUtil.js");
 
 if(process.argv.length<4) {
   console.log('usage: %s %s training_file test_file', process.argv[0], process.argv[1]);
@@ -20,7 +20,7 @@ var fn_test = process.argv[3];
 console.log('=== TRAIN:%s ===', fn);
 console.log('=== TEST:%s ===', fn_test);
 
-data_util.loadTextFile(fn, function(D) {
+DataUtil.loadTextFile(fn, function(D) {
 
   //decision tree deals with both numeric/categorical features
   //but you have to specify its type individually in 2nd line of the file
@@ -36,7 +36,7 @@ data_util.loadTextFile(fn, function(D) {
       model.calcAccuracy(D.data, D.nTargets, function(acc, correct, total){
         console.log('training: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
       });
-      data_util.loadTextFile(fn_test, function(T) {
+      DataUtil.loadTextFile(fn_test, function(T) {
         model.calcAccuracy(T.data, T.nTargets, function(acc, correct, total){
           console.log('    test: got '+correct +' correct out of '+total+' examples. accuracy:'+(acc*100.0).toFixed(2)+'%');
         });
