@@ -7,7 +7,7 @@ class Tree {
         let major_label = this.mostCommon(D.nTargets);
 
         return new TreeDataModel(
-            this._buildC45Tree(D.data, D.nTargets, D.l_featuresIndex, D.featureNames, D.featuresType, major_label),
+            this._buildC45Tree(D.data, D.targets, D.l_featuresIndex, D.featureNames, D.featuresType, major_label),
             D.feature_name2id,
             this.mostCommon(D.nTargets),
         );

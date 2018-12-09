@@ -1,6 +1,6 @@
 {
   "name": "learningjs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "logistic regression/c4.5 decision tree algorithm",
   "main": "learningjs.js",
   "scripts": {
