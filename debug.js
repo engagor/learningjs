@@ -2,7 +2,7 @@ require('dotenv').config();
 
 class Debug {
     static debugp(msg, depth) {
-        if (process.env['VERBOSE'] === true) {
+        if (process.env['VERBOSE'] !== true) {
             return;
         }
 
