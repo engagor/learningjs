@@ -54,19 +54,31 @@ class TreeModel {
     }
 
     serialize() {
-        let root = this.model;
-        root.featureMapping = this.featureMapping;
-        root.majorLabel = this.majorLabel;
-        return JSON.stringify(root);
+        let featureMapping = {};
+
+        for (let i in this.featureMapping) {
+            if (!this.featureMapping.hasOwnProperty(i)) {
+                continue;
+            }
+
+            featureMapping[i] = this.featureMapping[i];
+        }
+
+        let objectRoot = {
+            model: this.model,
+            featureMapping: featureMapping,
+            majorLabel: this.majorLabel,
+        };
+
+        return JSON.stringify(objectRoot);
     }
 
     unserialize(jsonString) {
-        let data = JSON.parse(jsonString);
-        this.featureMapping = data.featureMapping.slice();
-        this.majorLabel = data.featureMapping;
-        delete data.featureMapping;
-        delete data.majorLabel;
-        this.model = data;
+        let objectRoot = JSON.parse(jsonString);
+
+        this.model = objectRoot.model;
+        this.featureMapping = objectRoot.featureMapping;
+        this.majorLabel = objectRoot.majorLabel;
     }
 }
 
