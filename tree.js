@@ -4,12 +4,12 @@ const TreeDataModel = require('./treeModel.js');
 
 class Tree {
     train(D) {
-        let major_label = this.mostCommon(D.nTargets);
+        let major_label = this.mostCommon(D.targets);
 
         return new TreeDataModel(
             this._buildC45Tree(D.data, D.targets, D.l_featuresIndex, D.featureNames, D.featuresType, major_label),
             D.feature_name2id,
-            this.mostCommon(D.nTargets),
+            major_label,
         );
     }
 
